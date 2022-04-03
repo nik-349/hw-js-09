@@ -13,16 +13,23 @@ refs.form.addEventListener('submit', clickForm)
 function clickForm(event) {
   event.preventDefault()
 
+
+
   let delay = Number(refs.delay.value);
   let delayStep = Number(refs.delayStep.value);
   let delayAmount = Number(refs.delayAmaunt.value);
-  for (let position = 1; position <= delayAmount; position += 1) {
-    createPromise(position, delay)
-      .then(onSuccess)
-      .catch(onError)
-      delay += delayStep;
+  if (delay < 0 || delayStep < 0) {
+    Notify.warning('Invalid value entered')
+    return
   }
 
+  for (let position = 1; position <= delayAmount; position += 1) {
+    
+    createPromise(position, delay)
+        .then(onSuccess)
+        .catch(onError)
+      delay += delayStep;
+  }
 }
   
 function onSuccess (value) {
